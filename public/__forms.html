@@ -1,0 +1,33 @@
+<!--
+  Netlify Forms detection file.
+  Netlify parses static HTML at deploy time to register forms. Astro's
+  optimized page output isn't always parsed, so this bare, always-static
+  copy guarantees the "enquiry" form is registered. The field names here
+  MUST match src/components/ContactForm.astro exactly.
+  Not linked anywhere and never seen by visitors.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Netlify form registration</title>
+  </head>
+  <body>
+    <form name="enquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="enquiry" />
+      <input name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <select name="enquiry-type">
+        <option>Wedding</option>
+        <option>Corporate event</option>
+        <option>Private event</option>
+        <option>Guitar lessons</option>
+        <option>Other</option>
+      </select>
+      <input type="date" name="event-date" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
