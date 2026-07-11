@@ -1,0 +1,39 @@
+---
+import { getEntry, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "./Hero.astro";
+
+interface Props {
+  slug: string;
+  heroSize?: "full" | "tall" | "short";
+}
+
+const { slug, heroSize = "tall" } = Astro.props;
+
+const entry = await getEntry("pages", slug);
+if (!entry) throw new Error(`Missing content page: src/content/pages/${slug}.md`);
+
+const { Content } = await render(entry);
+const { title, description, eyebrow, subtitle, heroImage, heroAlt, heroPosition } = entry.data;
+---
+
+<BaseLayout title={title} description={description} ogImage={heroImage.src}>
+  <Hero
+    image={heroImage}
+    alt={heroAlt}
+    position={heroPosition}
+    eyebrow={eyebrow}
+    title={title}
+    subtitle={subtitle}
+    size={heroSize}
+  >
+    <slot name="hero-cta" />
+  </Hero>
+
+  <article class="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+    <div class="prose-elegant">
+      <Content />
+    </div>
+    <slot />
+  </article>
+</BaseLayout>

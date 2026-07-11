@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Gallery from "../components/Gallery.astro";
+import heroImage from "../assets/heroes/gallery.jpg";
+---
+
+<BaseLayout
+  title="Gallery"
+  description="Photos of The Dynamic Duo — Indigo Sangster and Ruby Cheyne performing at weddings, events and recitals."
+  ogImage={heroImage.src}
+>
+  <Hero
+    image={heroImage}
+    alt="The Dynamic Duo performing"
+    position="center 35%"
+    eyebrow="Moments"
+    title="Gallery"
+    subtitle="A few moments from performances, ceremonies and recitals."
+    size="short"
+  />
+  <section class="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+    <Gallery />
+  </section>
+</BaseLayout>

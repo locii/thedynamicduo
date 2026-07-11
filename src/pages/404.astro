@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found" description="The page you're looking for doesn't exist.">
+  <section class="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center px-6 py-32 text-center">
+    <p class="eyebrow mb-5">Error 404</p>
+    <h1 class="text-4xl text-bone sm:text-5xl">Page not found</h1>
+    <p class="mt-6 max-w-xl text-lg text-bone-dim">
+      The page you were looking for has moved or never existed. Let's get you back on track.
+    </p>
+    <a
+      href="/"
+      class="mt-10 inline-flex items-center gap-2 rounded-sm bg-brass px-7 py-3.5 text-sm font-medium tracking-wide text-ink transition hover:bg-brass-soft"
+    >
+      Back to home
+    </a>
+  </section>
+</BaseLayout>

@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import ContactForm from "../components/ContactForm.astro";
+import heroImage from "../assets/heroes/contact.jpg";
+import { site } from "../site";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Enquire about booking The Dynamic Duo for your wedding or event, or about guitar lessons with Indigo and Ruby."
+  ogImage={heroImage.src}
+>
+  <Hero
+    image={heroImage}
+    alt="Get in touch with The Dynamic Duo"
+    position="center 35%"
+    eyebrow="Enquiries"
+    title="Get in touch"
+    subtitle="Booking an event or interested in lessons? Send us a note and we'll reply soon."
+    size="short"
+  />
+
+  <section class="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+      <div>
+        <h2 class="font-[family-name:var(--font-serif)] text-3xl text-bone">Let's talk music</h2>
+        <p class="mt-4 text-bone-dim">
+          Whether it's a wedding ceremony, a corporate function, or weekly guitar lessons, tell us a little about
+          what you're after and we'll get back to you.
+        </p>
+        <dl class="mt-8 space-y-4 text-sm">
+          <div>
+            <dt class="eyebrow mb-1">Email</dt>
+            <dd>
+              <a href={`mailto:${site.contactEmail}`} class="text-bone-dim transition hover:text-brass">
+                {site.contactEmail}
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="eyebrow mb-1">Based in</dt>
+            <dd class="text-bone-dim">{site.location}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="rounded-sm border border-ink-line bg-ink-soft p-6 sm:p-8">
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,102 @@
+---
+import { site, nav } from "../site";
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path === href || path.startsWith(href + "/");
+---
+
+<header class="absolute inset-x-0 top-0 z-50">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10" aria-label="Primary">
+    <a href="/" class="group flex flex-col leading-none">
+      <span class="font-[family-name:var(--font-serif)] text-xl tracking-wide text-bone">{site.name}</span>
+      <span class="mt-1 text-[0.6rem] uppercase tracking-[0.28em] text-brass">{site.tagline}</span>
+    </a>
+
+    <!-- Desktop menu -->
+    <ul class="hidden items-center gap-7 lg:flex">
+      {
+        nav
+          .filter((i) => i.href !== "/")
+          .map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  "text-sm tracking-wide transition-colors hover:text-brass",
+                  isActive(item.href) ? "text-brass" : "text-bone-dim",
+                ]}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+      }
+    </ul>
+
+    <!-- Mobile toggle -->
+    <button
+      id="nav-toggle"
+      class="inline-flex items-center justify-center p-2 text-bone lg:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 z-50 hidden bg-ink/97 backdrop-blur-sm lg:hidden"
+  >
+    <div class="flex items-center justify-between px-6 py-6">
+      <span class="font-[family-name:var(--font-serif)] text-xl text-bone">{site.name}</span>
+      <button id="nav-close" class="p-2 text-bone" aria-label="Close menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+    <ul class="mt-6 flex flex-col gap-1 px-6">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                "block border-b border-ink-line py-4 font-[family-name:var(--font-serif)] text-2xl transition-colors hover:text-brass",
+                isActive(item.href) ? "text-brass" : "text-bone",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const close = document.getElementById("nav-close");
+  const menu = document.getElementById("mobile-menu");
+  const open = () => {
+    menu?.classList.remove("hidden");
+    toggle?.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  };
+  const shut = () => {
+    menu?.classList.add("hidden");
+    toggle?.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  };
+  toggle?.addEventListener("click", open);
+  close?.addEventListener("click", shut);
+  menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", shut));
+  document.addEventListener("keydown", (e) => e.key === "Escape" && shut());
+</script>

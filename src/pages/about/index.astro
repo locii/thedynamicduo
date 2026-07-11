@@ -1,0 +1,31 @@
+---
+import RenderedPage from "../../components/RenderedPage.astro";
+
+const members = [
+  { href: "/about/indigo", name: "Indigo Sangster", role: "Singer-songwriter & classical guitarist" },
+  { href: "/about/ruby", name: "Ruby Cheyne", role: "Classical guitarist" },
+];
+---
+
+<RenderedPage slug="about-duo">
+  <section class="mt-6 grid gap-6 sm:grid-cols-2">
+    {
+      members.map((m) => (
+        <a
+          href={m.href}
+          class="group rounded-sm border border-ink-line bg-ink-soft p-8 transition hover:border-brass/60"
+        >
+          <p class="eyebrow mb-3">Meet</p>
+          <h3 class="font-[family-name:var(--font-serif)] text-2xl text-bone">{m.name}</h3>
+          <p class="mt-2 text-bone-dim">{m.role}</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-sm text-brass transition group-hover:gap-3">
+            Read bio
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+      ))
+    }
+  </section>
+</RenderedPage>

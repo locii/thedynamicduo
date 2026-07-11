@@ -1,0 +1,80 @@
+---
+/*
+ * Netlify Forms.
+ * On deploy, Netlify auto-detects this form from the static HTML (via
+ * data-netlify + the hidden form-name field) and emails submissions.
+ * Configure the notification address in Netlify: Forms → Settings & usage.
+ * The "bot-field" honeypot silently catches spam bots.
+ */
+const inputClass =
+  "w-full rounded-sm border border-ink-line bg-ink px-4 py-3 text-bone placeholder:text-bone-dim/60 transition focus:border-brass focus:outline-none";
+const labelClass = "mb-2 block text-sm text-bone-dim";
+---
+
+<form
+  name="enquiry"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action="/thanks"
+  class="space-y-6"
+>
+  <input type="hidden" name="form-name" value="enquiry" />
+  <p class="hidden">
+    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+  </p>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label class={labelClass} for="name">Name <span class="text-brass">*</span></label>
+      <input class={inputClass} type="text" id="name" name="name" required autocomplete="name" />
+    </div>
+    <div>
+      <label class={labelClass} for="email">Email <span class="text-brass">*</span></label>
+      <input class={inputClass} type="email" id="email" name="email" required autocomplete="email" />
+    </div>
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label class={labelClass} for="phone">Phone</label>
+      <input class={inputClass} type="tel" id="phone" name="phone" autocomplete="tel" />
+    </div>
+    <div>
+      <label class={labelClass} for="enquiry-type">Enquiry type</label>
+      <select class={inputClass} id="enquiry-type" name="enquiry-type">
+        <option>Wedding</option>
+        <option>Corporate event</option>
+        <option>Private event</option>
+        <option>Guitar lessons</option>
+        <option>Other</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label class={labelClass} for="event-date">Event date (if known)</label>
+    <input class={inputClass} type="date" id="event-date" name="event-date" />
+  </div>
+
+  <div>
+    <label class={labelClass} for="message">Message <span class="text-brass">*</span></label>
+    <textarea
+      class={inputClass}
+      id="message"
+      name="message"
+      rows="5"
+      required
+      placeholder="Tell us about your event or what you'd like to learn…"></textarea>
+  </div>
+
+  <button
+    type="submit"
+    class="inline-flex items-center gap-2 rounded-sm bg-brass px-8 py-3.5 text-sm font-medium tracking-wide text-ink transition hover:bg-brass-soft"
+  >
+    Send enquiry
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+</form>

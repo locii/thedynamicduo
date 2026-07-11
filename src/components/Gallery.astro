@@ -1,0 +1,61 @@
+---
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+/*
+ * Drop-in gallery.
+ * Add photos by dropping .jpg/.jpeg/.png/.webp files into src/assets/gallery/
+ * (or a subfolder). They appear here automatically, sorted by filename, and
+ * open in a lightbox on click. No code changes needed.
+ */
+const files = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/gallery/**/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}",
+  { eager: true },
+);
+
+const entries = Object.entries(files).sort(([a], [b]) => a.localeCompare(b));
+
+const photos = await Promise.all(
+  entries.map(async ([path, mod]) => {
+    const img = mod.default;
+    const full = await getImage({ src: img, width: 1800, format: "webp", quality: 82 });
+    const thumb = await getImage({ src: img, width: 800, format: "webp", quality: 78 });
+    const name = path.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "";
+    return { full: full.src, thumb: thumb.src, w: img.width, h: img.height, name };
+  }),
+);
+---
+
+{
+  photos.length === 0 ? (
+    <p class="text-bone-dim">
+      No photos yet. Drop images into <code class="text-brass">src/assets/gallery/</code> to populate the gallery.
+    </p>
+  ) : (
+    <div class="columns-2 gap-4 sm:columns-3 lg:gap-5 [&>a]:mb-4 lg:[&>a]:mb-5">
+      {photos.map((p) => (
+        <a
+          href={p.full}
+          class="glightbox group relative block overflow-hidden rounded-sm border border-ink-line/60 break-inside-avoid"
+          data-gallery="duo"
+        >
+          <img
+            src={p.thumb}
+            alt={`Performance photo — ${p.name}`}
+            width={p.w}
+            height={p.h}
+            loading="lazy"
+            decoding="async"
+            class="w-full transition duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-110"
+          />
+          <span class="pointer-events-none absolute inset-0 bg-ink/0 transition group-hover:bg-ink/10" />
+        </a>
+      ))}
+    </div>
+  )
+}
+
+<script>
+  import GLightbox from "glightbox";
+  GLightbox({ selector: ".glightbox", touchNavigation: true, loop: true });
+</script>
