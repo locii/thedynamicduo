@@ -31,8 +31,13 @@ const year = new Date().getFullYear();
         </a>
         {
           site.instagram && (
-            <a href={site.instagram} class="mt-2 block text-bone-dim transition-colors hover:text-brass">
-              Instagram
+            <a
+              href={site.instagram}
+              class="mt-2 block text-bone-dim transition-colors hover:text-brass"
+              target="_blank"
+              rel="noopener"
+            >
+              {site.instagramHandle ?? "Instagram"}
             </a>
           )
         }

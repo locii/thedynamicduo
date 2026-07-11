@@ -5,7 +5,8 @@ export const site = {
   // Where the contact form emails land. Update to a dedicated address if you like.
   contactEmail: "contact@bamboopixel.com",
   // Optional social links — leave blank to hide.
-  instagram: "", // e.g. "https://instagram.com/thedynamicduo"
+  instagram: "https://instagram.com/thedynamicduo.ri",
+  instagramHandle: "@thedynamicduo.ri",
   location: "Melbourne, Australia",
 };
 

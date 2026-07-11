@@ -42,10 +42,22 @@ import { site } from "../site";
             <dt class="eyebrow mb-1">Based in</dt>
             <dd class="text-bone-dim">{site.location}</dd>
           </div>
+          {
+            site.instagram && (
+              <div>
+                <dt class="eyebrow mb-1">Instagram</dt>
+                <dd>
+                  <a href={site.instagram} target="_blank" rel="noopener" class="text-bone-dim transition hover:text-brass">
+                    {site.instagramHandle}
+                  </a>
+                </dd>
+              </div>
+            )
+          }
         </dl>
       </div>
 
-      <div class="rounded-sm border border-ink-line bg-ink-soft p-6 sm:p-8">
+      <div class="rounded-sm border border-ink-line bg-ink-soft p-6 sm:p-10 lg:p-12">
         <ContactForm />
       </div>
     </div>
